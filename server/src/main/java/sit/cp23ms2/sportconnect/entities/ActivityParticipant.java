@@ -1,6 +1,9 @@
 package sit.cp23ms2.sportconnect.entities;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import sit.cp23ms2.sportconnect.entities.idclass.ActivityParticipantId;
+import sit.cp23ms2.sportconnect.enums.PostgreSQLEnumType;
 import sit.cp23ms2.sportconnect.enums.StatusParticipant;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +18,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "activityParticipants")
 @IdClass(ActivityParticipantId.class)
+@TypeDef(name = "enum_type", typeClass = PostgreSQLEnumType.class)
 public class ActivityParticipant implements Serializable {
     @Id
     @ManyToOne
@@ -28,6 +32,7 @@ public class ActivityParticipant implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
+    @Type(type = "enum_type")
     private StatusParticipant status;
 
     @CreationTimestamp

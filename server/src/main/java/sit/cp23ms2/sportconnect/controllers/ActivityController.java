@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/activities")
@@ -29,10 +30,14 @@ public class ActivityController {
     @GetMapping
     public PageActivityDto getActivity(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int pageSize,
-                                       @RequestParam(defaultValue = "place") String sortBy, HttpServletResponse response) throws IOException {
+                                       @RequestParam(defaultValue = "place") String sortBy,
+                                       @RequestParam(required = false)Set<Integer> categoryIds,
+                                        @RequestParam(required = false)String title,
+                                        @RequestParam(required = false)String place
+            , HttpServletResponse response) throws IOException {
         //response.sendRedirect("https://google.com");
 
-        return activityService.getActivity(page, pageSize, sortBy);
+        return activityService.getActivity(page, pageSize, sortBy, categoryIds, title, place);
     }
 
     @GetMapping("/{id}")

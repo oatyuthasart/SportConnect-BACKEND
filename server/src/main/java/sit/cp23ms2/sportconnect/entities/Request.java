@@ -3,6 +3,7 @@ package sit.cp23ms2.sportconnect.entities;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import sit.cp23ms2.sportconnect.entities.idclass.RequestId;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,13 +13,15 @@ import java.time.Instant;
 @Setter
 @Entity
 @Table(name = "request")
+@IdClass(RequestId.class)
 public class Request implements Serializable {
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "fromUserId")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Id
+    @ManyToOne
     @JoinColumn(name = "activityId")
     private Activity activity;
 
