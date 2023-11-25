@@ -2,6 +2,7 @@
 CREATE USER "SportConnectBE" WITH PASSWORD 'SportCBEBECP23MS2';
 GRANT ALL PRIVILEGES ON DATABASE "SportConnect" TO "SportConnectBE";
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "SportConnectBE";
+GRANT ALL PRIVILEGES ON SCHEMA public TO "SportConnectBE";
 SET role "postgres";
 
 -- DB
@@ -137,17 +138,28 @@ END;
 -- INSERT DATA
 insert into "user" values
 (nextval('users_sequence'), 'Oat', 'oat@email.com', 'admin', 'A12dbf14hjlk09888ddsafgSDF','1', '2020-09-27', 'phone','line',now(),now(),now()),
-(nextval('users_sequence'), 'Vinncent', 'Vinncent@email.com', 'user', '45FGFdsf093lfgffflDSAFDSAF43','1', '2020-09-27', 'phone','line',now(),now(),now());
+(nextval('users_sequence'), 'Vinncent', 'Vinncent@email.com', 'user', '45FGFdsf093lfgffflDSAFDSAF43','1', '2020-09-27', 'phone','line',now(),now(),now()),
+(nextval('users_sequence'), 'NewUser', 'asdfsda@email.com', 'user', 'fd43DDSfgFDJkmAF43','1', '2020-09-27', 'phone','line',now(),now(),now()),
+(nextval('users_sequence'), 'Mbappe', 's77777@email.com', 'user', '12sfdSDww232trhy3DDSfgFDJkmAF43','1', '2020-09-27', 'phone','line',now(),now(),now()),
+(nextval('users_sequence'), 'Haaland', '34435DFDFA@email.com', 'user', 'df3DSF989fdghs','1', '2020-09-27', 'phone','line',now(),now(),now());
 
 insert into "categories" values
-(nextval('categories_sequence'), 'Football', '22 players 11 each team');
+(nextval('categories_sequence'), 'Football', '22 players 11 each team'),
+(nextval('categories_sequence'), 'Volleyball', '6 players Volleyball'),
+(nextval('categories_sequence'), 'Tennis', '1v1 Tennis');
 
 insert into "activities" values
 (nextval('activities_sequence'), 1, 1, 'Football Party', 'Description', 'Place', now(), 40, now(), now()),
-(nextval('activities_sequence'), 2, 1, 'Football After Class', 'DescriptionZ', 'Place2', now(), 100, now(), now());
+(nextval('activities_sequence'), 2, 1, 'Football After Class', 'DescriptionZ', 'Place2', now(), 100, now(), now()),
+(nextval('activities_sequence'), 3, 2, 'Come play Volley!!', 'วอลเลย์กันเถอะ', 'สนาม A', now(), 120, now(), now()),
+(nextval('activities_sequence'), 3, 3, 'ใครว่างมาเทนนิสที่สนามหลังมอ', 'สนามหลังมอ เทนนิส 1v1', 'สนามหลังมอ', now(), 100, now(), now());
 
 insert into "activityParticipants" values
 (1, 1, 'ready', now()),
 (2, 1, 'ready', now()),
 (1, 2, 'ready', now()),
 (2, 2, 'ready', now());
+
+insert into "request" values
+(4, 1, 'อยากพริ้วว่ะ', now()),
+(5, 4, 'ผมเล่นเทนนิสโคตรโหด', now());

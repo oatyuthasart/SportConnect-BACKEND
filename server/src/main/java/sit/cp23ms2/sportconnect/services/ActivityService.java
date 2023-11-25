@@ -24,6 +24,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Set;
+
 
 @Service
 public class ActivityService {
@@ -40,10 +42,15 @@ public class ActivityService {
     final private FieldError titleErrorObj = new FieldError("createActivityDto",
             "title", "Title already used in other Activity now! Please use other title");
 
-    public PageActivityDto getActivity(int pageNum, int pageSize, String sortBy) {
+    public PageActivityDto getActivity(int pageNum, int pageSize, String sortBy, Set<Integer> categoryIds, String title, String place) {
         Sort sort = Sort.by(Sort.Direction.DESC, sortBy);
         Pageable pageRequest = PageRequest.of(pageNum, pageSize, sort);
-        Page<Activity> listActivities = repository.findAllActivities(pageRequest); //ได้เป็น Pageable ของ User
+        Page<Activity> listActivities;
+        if(categoryIds != null) {
+            listActivities = repository.findAllActivities(pageRequest, categoryIds, title, place); //ได้เป็น Pageable ของ User\
+        } else {
+            listActivities = repository.findAllActivitiesNoCategoryFilter(pageRequest, title, place);
+        }
         PageActivityDto pageActivityDto = modelMapper.map(listActivities, PageActivityDto.class); //map ใส่ PageUserDto
         return  pageActivityDto;
     }

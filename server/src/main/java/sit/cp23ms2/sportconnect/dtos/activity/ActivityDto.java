@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 public class ActivityDto {
     private Integer activityId;
-    private User hostUser;
+    private Integer hostUserId;
     private Category categoryId;
     private String title;
     private String description;

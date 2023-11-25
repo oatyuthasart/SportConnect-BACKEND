@@ -7,5 +7,5 @@ public enum StatusParticipant {
     arrived,
     to_be_late,
     ready,
-    not_Coming
+    not_coming
 }
