@@ -38,7 +38,7 @@ public class RequestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createRequest(@Valid @RequestBody CreateRequestDto newRequest, BindingResult result) throws MethodArgumentNotValidException {
+    public ResponseEntity<?> createRequest(@Valid @ModelAttribute CreateRequestDto newRequest, BindingResult result) throws MethodArgumentNotValidException {
         return requestService.createRequest(newRequest, result);
     }
 
