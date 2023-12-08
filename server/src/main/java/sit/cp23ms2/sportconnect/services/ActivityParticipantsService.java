@@ -20,6 +20,7 @@ import sit.cp23ms2.sportconnect.dtos.request.RequestDto;
 import sit.cp23ms2.sportconnect.entities.ActivityParticipant;
 import sit.cp23ms2.sportconnect.entities.Request;
 import sit.cp23ms2.sportconnect.enums.StatusParticipant;
+import sit.cp23ms2.sportconnect.exceptions.type.ApiNotFoundException;
 import sit.cp23ms2.sportconnect.repositories.ActivityParticipantRepository;
 
 import java.time.Instant;
@@ -33,6 +34,16 @@ public class ActivityParticipantsService {
 
     public PageActivityParticipantDto getActivityParticipants(int pageNum, int pageSize, Integer activityId, Integer userId) {
         Pageable pageRequest = PageRequest.of(pageNum, pageSize);
+        if(activityId != null || userId != null) {
+            if(activityId != null && userId == null) { //ถ้า activity params != null
+                if(!repository.existsByActivity_ActivityId(activityId)) throw new ApiNotFoundException("Not found any participant in this activity");
+            } else if(userId != null && activityId == null) { // user params != null
+                if(!repository.existsByUser_UserId(userId)) throw new ApiNotFoundException("Not found any participant from this user");
+            } else { // ถ้า != null ทั้งคู่
+                if(!repository.existsByActivity_ActivityIdAndUser_UserId(activityId, userId))throw new ApiNotFoundException("Not found any participant " +
+                        "of this user for this activity");
+            }
+        }
         Page<ActivityParticipant> listActivityParticipants = repository.findAllActivityParticipants(pageRequest, activityId, userId); //ได้เป็น Pageable ของ Request
         PageActivityParticipantDto pageActivityParticipantDto = modelMapper.map(listActivityParticipants, PageActivityParticipantDto.class); //map ใส่ PageRequestDto
         return  pageActivityParticipantDto;
@@ -40,7 +51,7 @@ public class ActivityParticipantsService {
 
     public ResponseEntity<?> createActivityParticipants(CreateActivityParticipantDto newParticipant, BindingResult result) throws MethodArgumentNotValidException {
         if(repository.existsByActivity_ActivityIdAndUser_UserId(newParticipant.getActivityId(), newParticipant.getUserId())) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("This user has already participated in this Party!");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("This user has already participated in this Activity!");
         }
         ActivityParticipant activityParticipant = modelMapper.map(newParticipant, ActivityParticipant.class);
 //        ActivityParticipant createdActivityParticipant = repository.insertWithEnum(newParticipant.getUserId()
