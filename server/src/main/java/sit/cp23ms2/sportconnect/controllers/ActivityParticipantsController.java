@@ -36,7 +36,7 @@ public class ActivityParticipantsController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createActivityParticipant(@Valid @RequestBody CreateActivityParticipantDto newActivityParticipant, BindingResult result) throws MethodArgumentNotValidException {
+    public ResponseEntity<?> createActivityParticipant(@Valid @ModelAttribute CreateActivityParticipantDto newActivityParticipant, BindingResult result) throws MethodArgumentNotValidException {
         return activityParticipantsService.createActivityParticipants(newActivityParticipant, result);
     }
 

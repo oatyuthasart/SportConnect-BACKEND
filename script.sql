@@ -35,7 +35,8 @@ CREATE TABLE IF NOT EXISTS public.activities
     "dateTime" timestamp with time zone NOT NULL,
     duration integer NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL
+    "updatedAt" timestamp with time zone NOT NULL,
+	"noOfMembers" integer
 );
 
 CREATE TYPE gender_user AS ENUM ('0', '1', '2', '9');
@@ -52,8 +53,7 @@ CREATE TABLE IF NOT EXISTS public."user"
     "phoneNumber" character varying(10),
     "lineId" character varying(24),
     "lastLogin" timestamp with time zone,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL
+    "registrationDate" date NOT NULL
 );
 
 COMMENT ON TABLE public."user"
@@ -137,11 +137,11 @@ END;
 
 -- INSERT DATA
 insert into "user" values
-(nextval('users_sequence'), 'Oat', 'oat@email.com', 'admin', 'A12dbf14hjlk09888ddsafgSDF','1', '2020-09-27', 'phone','line',now(),now(),now()),
-(nextval('users_sequence'), 'Vinncent', 'Vinncent@email.com', 'user', '45FGFdsf093lfgffflDSAFDSAF43','1', '2020-09-27', 'phone','line',now(),now(),now()),
-(nextval('users_sequence'), 'NewUser', 'asdfsda@email.com', 'user', 'fd43DDSfgFDJkmAF43','1', '2020-09-27', 'phone','line',now(),now(),now()),
-(nextval('users_sequence'), 'Mbappe', 's77777@email.com', 'user', '12sfdSDww232trhy3DDSfgFDJkmAF43','1', '2020-09-27', 'phone','line',now(),now(),now()),
-(nextval('users_sequence'), 'Haaland', '34435DFDFA@email.com', 'user', 'df3DSF989fdghs','1', '2020-09-27', 'phone','line',now(),now(),now());
+(nextval('users_sequence'), 'Oat', 'oat@email.com', 'admin', 'A12dbf14hjlk09888ddsafgSDF','1', '2020-09-27', 'phone','line',now(),now()),
+(nextval('users_sequence'), 'Vinncent', 'Vinncent@email.com', 'user', '45FGFdsf093lfgffflDSAFDSAF43','1', '2020-09-27', 'phone','line',now(),now()),
+(nextval('users_sequence'), 'NewUser', 'asdfsda@email.com', 'user', 'fd43DDSfgFDJkmAF43','1', '2020-09-27', 'phone','line',now(),now()),
+(nextval('users_sequence'), 'Mbappe', 's77777@email.com', 'user', '12sfdSDww232trhy3DDSfgFDJkmAF43','1', '2020-09-27', 'phone','line',now(),now()),
+(nextval('users_sequence'), 'Haaland', '34435DFDFA@email.com', 'user', 'df3DSF989fdghs','1', '2020-09-27', 'phone','line',now(),now());
 
 insert into "categories" values
 (nextval('categories_sequence'), 'Football', '22 players 11 each team'),
@@ -149,10 +149,10 @@ insert into "categories" values
 (nextval('categories_sequence'), 'Tennis', '1v1 Tennis');
 
 insert into "activities" values
-(nextval('activities_sequence'), 1, 1, 'Football Party', 'Description', 'Place', now(), 40, now(), now()),
-(nextval('activities_sequence'), 2, 1, 'Football After Class', 'DescriptionZ', 'Place2', now(), 100, now(), now()),
-(nextval('activities_sequence'), 3, 2, 'Come play Volley!!', 'วอลเลย์กันเถอะ', 'สนาม A', now(), 120, now(), now()),
-(nextval('activities_sequence'), 3, 3, 'ใครว่างมาเทนนิสที่สนามหลังมอ', 'สนามหลังมอ เทนนิส 1v1', 'สนามหลังมอ', now(), 100, now(), now());
+(nextval('activities_sequence'), 1, 1, 'Football Party', 'Description', 'Place', now(), 40, now(), now(), 22),
+(nextval('activities_sequence'), 2, 1, 'Football After Class', 'DescriptionZ', 'Place2', now(), 100, now(), now(), 22),
+(nextval('activities_sequence'), 3, 2, 'Come play Volley!!', 'วอลเลย์กันเถอะ', 'สนาม A', now(), 120, now(), now(), 12),
+(nextval('activities_sequence'), 3, 3, 'ใครว่างมาเทนนิสที่สนามหลังมอ', 'สนามหลังมอ เทนนิส 1v1', 'สนามหลังมอ', now(), 100, now(), now(), 12);
 
 insert into "activityParticipants" values
 (1, 1, 'ready', now()),

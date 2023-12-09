@@ -31,8 +31,9 @@ public class CreateActivityDto {
 
     private Instant dateTime;
 
-
     private Integer duration;
+
+    private Integer noOfMembers;
 
     //Auto generated
     private Instant createdAt;

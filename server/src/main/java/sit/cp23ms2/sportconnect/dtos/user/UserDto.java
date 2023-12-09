@@ -1,5 +1,6 @@
 package sit.cp23ms2.sportconnect.dtos.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import sit.cp23ms2.sportconnect.entities.Activity;
 import sit.cp23ms2.sportconnect.enums.Gender;
 import sit.cp23ms2.sportconnect.enums.Role;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,8 +27,8 @@ public class UserDto {
     private String phoneNumber;
     private String lineId;
     private Instant lastLogin;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private LocalDate registrationDate;
 
+    @JsonIgnore
     private Set<Activity> userActivities = new HashSet<>();
 }

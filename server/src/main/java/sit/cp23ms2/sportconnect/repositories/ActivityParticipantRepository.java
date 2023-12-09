@@ -33,6 +33,8 @@ public interface ActivityParticipantRepository extends JpaRepository<ActivityPar
     );
 
     public boolean existsByActivity_ActivityIdAndUser_UserId(Integer activityId, Integer userId);
+    public boolean existsByActivity_ActivityId(Integer activityId);
+    public boolean existsByUser_UserId(Integer userId);
     public Optional<ActivityParticipant> findByActivityActivityIdAndUser_UserId(Integer activityId, Integer userId);
     @Transactional
     public void deleteByActivity_ActivityIdAndUser_UserId(Integer activityId, Integer userId);

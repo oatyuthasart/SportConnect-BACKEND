@@ -1,5 +1,6 @@
 package sit.cp23ms2.sportconnect.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import sit.cp23ms2.sportconnect.enums.Gender;
 import sit.cp23ms2.sportconnect.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -53,13 +55,9 @@ public class User {
     @Column(name = "lastLogin")
     private Instant lastLogin;
 
-    @CreationTimestamp
-    @Column(name = "createdAt", nullable = false)
-    private Instant createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updatedAt", nullable = false)
-    private Instant updatedAt;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "registrationDate", nullable = false)
+    private LocalDate registrationDate;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,

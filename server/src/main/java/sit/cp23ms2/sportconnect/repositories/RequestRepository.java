@@ -23,6 +23,8 @@ public interface RequestRepository extends JpaRepository<Request, RequestId> {
     );
 
     public boolean existsByActivity_ActivityIdAndUser_UserId(Integer activityId, Integer userId);
+    public boolean existsByActivity_ActivityId(Integer activityId);
+    public boolean existsByUser_UserId(Integer userId);
     public Optional<Request> findByActivityActivityIdAndUser_UserId(Integer activityId, Integer userId);
     @Transactional
     public void deleteByActivity_ActivityIdAndUser_UserId(Integer activityId, Integer userId);

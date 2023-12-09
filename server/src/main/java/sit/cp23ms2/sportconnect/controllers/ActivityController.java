@@ -46,7 +46,7 @@ public class ActivityController {
     }
 
     @PostMapping
-    public ActivityDto createActivity(@Valid @RequestBody CreateActivityDto newActivity, BindingResult result) throws MethodArgumentNotValidException {
+    public ActivityDto createActivity(@Valid @ModelAttribute CreateActivityDto newActivity, BindingResult result) throws MethodArgumentNotValidException {
         return activityService.create(newActivity, result);
     }
 
