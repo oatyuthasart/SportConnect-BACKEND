@@ -19,7 +19,7 @@ jobs:
       
     # Delete Docker Images (Frontend, Backend)
     - name: Remove Backend Image
-      run: docker rmi cp23ms2-backapp
+      run: docker rmi work-backapp
 
     # Fetch latest version from branch dev 
     - name: Fetching Latest Data
