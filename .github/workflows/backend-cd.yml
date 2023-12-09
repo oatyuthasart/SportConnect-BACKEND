@@ -23,12 +23,12 @@ jobs:
 
     # Fetch latest version from branch dev 
     - name: Fetching Latest Data
-      working-directory: ./backend
+      working-directory: ../backend
       run: git fetch
       
     # Pull from Github 
     - name: Pulling Latest Data
-      working-directory: ./backend
+      working-directory: ../backend
       run: git pull
           
     # Start Docker-compose
