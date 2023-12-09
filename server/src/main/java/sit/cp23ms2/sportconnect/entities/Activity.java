@@ -55,6 +55,9 @@ public class Activity {
     @Column(name = "updatedAt")
     private Instant updatedAt;
 
+    @Column(name = "noOfMembers")
+    private Integer noOfMembers;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {

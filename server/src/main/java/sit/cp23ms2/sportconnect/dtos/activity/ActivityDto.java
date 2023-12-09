@@ -24,6 +24,7 @@ public class ActivityDto {
     private Integer duration;
     private Instant createdAt;
     private Instant updatedAt;
+    private Integer noOfMembers;
     @JsonIgnore
     private Set<User> users = new HashSet<>();
 }
