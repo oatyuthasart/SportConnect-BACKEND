@@ -22,6 +22,8 @@ import sit.cp23ms2.sportconnect.entities.Request;
 import sit.cp23ms2.sportconnect.enums.StatusParticipant;
 import sit.cp23ms2.sportconnect.exceptions.type.ApiNotFoundException;
 import sit.cp23ms2.sportconnect.repositories.ActivityParticipantRepository;
+import sit.cp23ms2.sportconnect.repositories.ActivityRepository;
+import sit.cp23ms2.sportconnect.repositories.UserRepository;
 
 import java.time.Instant;
 
@@ -31,6 +33,10 @@ public class ActivityParticipantsService {
     private ActivityParticipantRepository repository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    ActivityRepository activityRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public PageActivityParticipantDto getActivityParticipants(int pageNum, int pageSize, Integer activityId, Integer userId) {
         Pageable pageRequest = PageRequest.of(pageNum, pageSize);
@@ -49,7 +55,13 @@ public class ActivityParticipantsService {
         return  pageActivityParticipantDto;
     }
 
-    public ResponseEntity<?> createActivityParticipants(CreateActivityParticipantDto newParticipant, BindingResult result) throws MethodArgumentNotValidException {
+    public ResponseEntity<?> createActivityParticipants(CreateActivityParticipantDto newParticipant, BindingResult result) throws MethodArgumentNotValidException, ApiNotFoundException {
+        boolean isThereActivity = activityRepository.existsById(newParticipant.getActivityId());
+        boolean isThereUser = userRepository.existsById(newParticipant.getUserId());
+        if(!isThereActivity)
+            throw new ApiNotFoundException("Activity not found!");
+        if(!isThereUser)
+            throw new ApiNotFoundException("User not found!");
         if(repository.existsByActivity_ActivityIdAndUser_UserId(newParticipant.getActivityId(), newParticipant.getUserId())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("This user has already participated in this Activity!");
         }

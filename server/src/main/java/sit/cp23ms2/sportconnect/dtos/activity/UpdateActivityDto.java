@@ -14,6 +14,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateActivityDto {
+
     private Integer categoryId;
 
     @Size(max = 100, message = "size must not over 100")
