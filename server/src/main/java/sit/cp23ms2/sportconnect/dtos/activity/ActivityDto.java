@@ -16,7 +16,8 @@ import java.util.Set;
 public class ActivityDto {
     private Integer activityId;
     private Integer hostUserId;
-    private Category categoryId;
+    //private Category categoryId;
+    private Integer categoryId;
     private String title;
     private String description;
     private String place;

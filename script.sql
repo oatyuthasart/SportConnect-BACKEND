@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS public.activities
 	"noOfMembers" integer
 );
 
-CREATE TYPE gender_user AS ENUM ('0', '1', '2', '9');
+CREATE TYPE gender_user AS ENUM ('Male', 'Female', 'Other', 'NotApplicable', 'Unknown');
 CREATE TYPE role_user AS ENUM ('admin', 'user');
 CREATE TABLE IF NOT EXISTS public."user"
 (
@@ -137,11 +137,11 @@ END;
 
 -- INSERT DATA
 insert into "user" values
-(nextval('users_sequence'), 'Oat', 'oat@email.com', 'admin', 'A12dbf14hjlk09888ddsafgSDF','1', '2020-09-27', 'phone','line',now(),now()),
-(nextval('users_sequence'), 'Vinncent', 'Vinncent@email.com', 'user', '45FGFdsf093lfgffflDSAFDSAF43','1', '2020-09-27', 'phone','line',now(),now()),
-(nextval('users_sequence'), 'NewUser', 'asdfsda@email.com', 'user', 'fd43DDSfgFDJkmAF43','1', '2020-09-27', 'phone','line',now(),now()),
-(nextval('users_sequence'), 'Mbappe', 's77777@email.com', 'user', '12sfdSDww232trhy3DDSfgFDJkmAF43','1', '2020-09-27', 'phone','line',now(),now()),
-(nextval('users_sequence'), 'Haaland', '34435DFDFA@email.com', 'user', 'df3DSF989fdghs','1', '2020-09-27', 'phone','line',now(),now());
+(nextval('users_sequence'), 'Oat', 'oat@email.com', 'admin', 'A12dbf14hjlk09888ddsafgSDF','Male', '2020-09-27', 'phone','line',now(),now()),
+(nextval('users_sequence'), 'Vinncent', 'Vinncent@email.com', 'user', '45FGFdsf093lfgffflDSAFDSAF43','Female', '2020-09-27', 'phone','line',now(),now()),
+(nextval('users_sequence'), 'NewUser', 'asdfsda@email.com', 'user', 'fd43DDSfgFDJkmAF43','Other', '2020-09-27', 'phone','line',now(),now()),
+(nextval('users_sequence'), 'Mbappe', 's77777@email.com', 'user', '12sfdSDww232trhy3DDSfgFDJkmAF43','NotApplicable', '2020-09-27', 'phone','line',now(),now()),
+(nextval('users_sequence'), 'Haaland', '34435DFDFA@email.com', 'user', 'df3DSF989fdghs','Unknown', '2020-09-27', 'phone','line',now(),now());
 
 insert into "categories" values
 (nextval('categories_sequence'), 'Football', '22 players 11 each team'),

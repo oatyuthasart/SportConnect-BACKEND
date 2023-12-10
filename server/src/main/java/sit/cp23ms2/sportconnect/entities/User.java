@@ -1,7 +1,10 @@
 package sit.cp23ms2.sportconnect.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import sit.cp23ms2.sportconnect.enums.Gender;
+import sit.cp23ms2.sportconnect.enums.PostgreSQLEnumType;
 import sit.cp23ms2.sportconnect.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -11,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
@@ -21,9 +25,11 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "user")
-public class User {
+@TypeDef(name = "enum_type", typeClass = PostgreSQLEnumType.class)
+public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hibernate_sequence")
+    @SequenceGenerator(name = "hibernate_sequence", sequenceName = "users_sequence", allocationSize = 1)
     @Column(name = "userId", nullable = false)
     private Integer userId;
 
@@ -35,14 +41,18 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
+    @Type(type = "enum_type")
     private Role role;
 
     @Column(name = "profilePicture")
     private String profilePicture;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
+    @Type(type = "enum_type")
     private Gender gender;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column(name = "dateOfBirth")
     private Date dateOfBirth;
 
@@ -55,6 +65,7 @@ public class User {
     @Column(name = "lastLogin")
     private Instant lastLogin;
 
+    @CreationTimestamp
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "registrationDate", nullable = false)
     private LocalDate registrationDate;
