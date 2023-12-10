@@ -21,7 +21,9 @@ import sit.cp23ms2.sportconnect.entities.Activity;
 import sit.cp23ms2.sportconnect.entities.Request;
 import sit.cp23ms2.sportconnect.exceptions.type.ApiNotFoundException;
 import sit.cp23ms2.sportconnect.repositories.ActivityParticipantRepository;
+import sit.cp23ms2.sportconnect.repositories.ActivityRepository;
 import sit.cp23ms2.sportconnect.repositories.RequestRepository;
+import sit.cp23ms2.sportconnect.repositories.UserRepository;
 
 @Service
 public class RequestService {
@@ -31,6 +33,10 @@ public class RequestService {
     private RequestRepository repository;
     @Autowired
     ActivityParticipantRepository participantRepository;
+    @Autowired
+    ActivityRepository activityRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public PageRequestDto getRequest(int pageNum, int pageSize, Integer activityId, Integer userId) {
         Pageable pageRequest = PageRequest.of(pageNum, pageSize);
@@ -49,13 +55,20 @@ public class RequestService {
         return  pageRequestDto;
     }
 
-    public ResponseEntity<?> createRequest(CreateRequestDto newRequest, BindingResult result) throws MethodArgumentNotValidException {
+    public ResponseEntity<?> createRequest(CreateRequestDto newRequest, BindingResult result) throws MethodArgumentNotValidException, ApiNotFoundException {
+        boolean isThereActivity = activityRepository.existsById(newRequest.getActivityId());
+        boolean isThereUser = userRepository.existsById(newRequest.getUserId());
+        if(!isThereActivity)
+            throw new ApiNotFoundException("Activity not found!");
+        if(!isThereUser)
+            throw new ApiNotFoundException("User not found!");
         if(participantRepository.existsByActivity_ActivityIdAndUser_UserId(newRequest.getActivityId(), newRequest.getUserId())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("You already participated in this Activity!");
         }
         if(repository.existsByActivity_ActivityIdAndUser_UserId(newRequest.getActivityId(), newRequest.getUserId())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("You already requested to this Activity");
         }
+        
         Request request = modelMapper.map(newRequest, Request.class);
         Request createdRequest = repository.saveAndFlush(request);
 //        return modelMapper.map(createdRequest, RequestDto.class);
