@@ -14,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.server.ResponseStatusException;
 import sit.cp23ms2.sportconnect.dtos.activity.PageActivityDto;
+import sit.cp23ms2.sportconnect.dtos.activity_participants.ActivityParticipantsDto;
 import sit.cp23ms2.sportconnect.dtos.request.CreateRequestDto;
 import sit.cp23ms2.sportconnect.dtos.request.PageRequestDto;
 import sit.cp23ms2.sportconnect.dtos.request.RequestDto;
@@ -51,7 +52,12 @@ public class RequestService {
             }
         }
         Page<Request> listRequests = repository.findAllRequests(pageRequest, activityId, userId); //ได้เป็น Pageable ของ Request
-        PageRequestDto pageRequestDto = modelMapper.map(listRequests, PageRequestDto.class); //map ใส่ PageRequestDto
+        Page<RequestDto> pageRequestIncludeUsername = listRequests.map(request -> { //set username in each row
+            RequestDto dto = modelMapper.map(request, RequestDto.class);
+            dto.setUsername(request.getUser().getUsername());
+            return dto;
+        });
+        PageRequestDto pageRequestDto = modelMapper.map(pageRequestIncludeUsername, PageRequestDto.class); //map ใส่ PageRequestDto
         return  pageRequestDto;
     }
 
