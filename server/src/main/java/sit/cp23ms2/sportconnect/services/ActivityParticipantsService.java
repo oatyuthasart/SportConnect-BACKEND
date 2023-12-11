@@ -50,8 +50,13 @@ public class ActivityParticipantsService {
                         "of this user for this activity");
             }
         }
-        Page<ActivityParticipant> listActivityParticipants = repository.findAllActivityParticipants(pageRequest, activityId, userId); //ได้เป็น Pageable ของ Request
-        PageActivityParticipantDto pageActivityParticipantDto = modelMapper.map(listActivityParticipants, PageActivityParticipantDto.class); //map ใส่ PageRequestDto
+        Page<ActivityParticipant> listActivityParticipants = repository.findAllActivityParticipants(pageRequest, activityId, userId); //ได้เป็น Pageable
+        Page<ActivityParticipantsDto> pageParticipantIncludeUsername = listActivityParticipants.map(activityParticipant -> { //set username in each row
+            ActivityParticipantsDto dto = modelMapper.map(activityParticipant, ActivityParticipantsDto.class);
+            dto.setUsername(activityParticipant.getUser().getUsername());
+            return dto;
+        });
+        PageActivityParticipantDto pageActivityParticipantDto = modelMapper.map(pageParticipantIncludeUsername, PageActivityParticipantDto.class); //map ใส่ PageRequestDto
         return  pageActivityParticipantDto;
     }
 

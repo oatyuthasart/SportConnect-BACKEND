@@ -158,7 +158,9 @@ insert into "activityParticipants" values
 (1, 1, 'ready', now()),
 (2, 1, 'ready', now()),
 (1, 2, 'ready', now()),
-(2, 2, 'ready', now());
+(2, 2, 'ready', now()),
+(3, 3, 'ready', now()),
+(3, 4, 'ready', now());
 
 insert into "request" values
 (4, 1, 'อยากพริ้วว่ะ', now()),

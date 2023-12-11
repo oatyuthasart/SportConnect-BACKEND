@@ -15,6 +15,7 @@ import java.time.Instant;
 @NoArgsConstructor
 public class RequestDto {
     private Integer userId;
+    private String username;
     private Integer activityId;
     private String message;
     private Instant requestedAt;
